@@ -1,6 +1,7 @@
 package com.lcwd.user.service.UserService.services.Impl;
 
 import com.lcwd.user.service.UserService.entities.User;
+import com.lcwd.user.service.UserService.exceptions.ResourceNotFoundException;
 import com.lcwd.user.service.UserService.repositories.UserRepository;
 import com.lcwd.user.service.UserService.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(String userId) {
-        return userRepository.findById(userId).orElseThrow();
+        return userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User with given ID: " + userId + " not found on the server!!!"));
     }
 }
