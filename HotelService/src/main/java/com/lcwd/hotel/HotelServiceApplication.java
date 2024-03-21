@@ -8,7 +8,7 @@ public class HotelServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HotelServiceApplication.class, args);
-		System.out.println("App is running successfully...");
+		System.out.println("Hotel App is running successfully...");
 	}
 
 }
