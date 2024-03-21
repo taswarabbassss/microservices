@@ -16,5 +16,6 @@ public interface UserService {
     //get single user by id
     User getUserById(String userId);
 
-    //skiping update and delete
+    String deleteUserById(String userId);
+    // update
 }

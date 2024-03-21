@@ -31,4 +31,15 @@ public class UserServiceImpl implements UserService {
     public User getUserById(String userId) {
         return userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User with given ID: " + userId + " not found on the server!!!"));
     }
+
+    @Override
+    public String deleteUserById(String userId) {
+        try{
+
+        userRepository.deleteById(userId);
+        } catch (Exception ex){
+            throw new RuntimeException("Delete unsuccessful");
+        }
+        return "Deleted Successfully";
+    }
 }
