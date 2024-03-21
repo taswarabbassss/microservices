@@ -24,11 +24,11 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public List<Rating> getAllRatingByUserId(String userId) {
-        return null;
+        return ratingRepo.findByUserId(userId);
     }
 
     @Override
     public List<Rating> getAllRatingByHotelId(String hotelId) {
-        return null;
+        return ratingRepo.findByHotelId(hotelId);
     }
 }
