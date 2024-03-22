@@ -1,5 +1,7 @@
 package com.lcwd.user.service.UserService.services.Impl;
 
+import com.lcwd.user.service.UserService.entities.Hotel;
+import com.lcwd.user.service.UserService.entities.Rating;
 import com.lcwd.user.service.UserService.entities.User;
 import com.lcwd.user.service.UserService.exceptions.ResourceNotFoundException;
 import com.lcwd.user.service.UserService.repositories.UserRepository;
@@ -7,13 +9,16 @@ import com.lcwd.user.service.UserService.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -47,11 +52,23 @@ public class UserServiceImpl implements UserService {
 
         // GET RATINGS ACCORDING TO USER ID WITH THE HELP OF RATINGS MICRO SERVICE
         //http://localhost:8083/ratings/users/2d51915e-b48d-41a8-89d0-5c2f3e1620c4
-
-
-        ArrayList ratings = restTemplate.getForObject("http://localhost:8083/ratings/users/"+userId, ArrayList.class);
-        user.setRatings(ratings);
+        Rating[] ratings = restTemplate.getForObject("http://localhost:8083/ratings/users/"+userId, Rating[].class);
+        List<Rating> ratingsList = Arrays.stream(ratings).toList();
+        user.setRatings(ratingsList);
         logger.info("[RATINGS]", ratings);
+
+        //GET HOTEL OF EVERY RATING
+//        http://localhost:8082/hotels/f46fa7a6-51cd-4ff6-a4b5-e84a11c45334
+        ratingsList.stream().map( rating -> {
+
+        ResponseEntity<Hotel> hotelResponseEntity = restTemplate.getForEntity("http://localhost:8082/hotels/"+ rating.getHotelId(), Hotel.class);
+        Hotel hotel = hotelResponseEntity.getBody();
+            rating.setHotel(hotel);
+            return rating;
+        }).collect(Collectors.toList());
+
+
+
         return  user;
     }
 
