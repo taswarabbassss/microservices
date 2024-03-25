@@ -21,6 +21,7 @@ spring:
 
 eureka:
   instance:
+    appname: USER-SERVICE
     prefer-ip-address: true
   client:
     fetch-registry: true

@@ -11,6 +11,7 @@ server:
 
 eureka:
   instance:
+    appname: RATING-SERVICE
     prefer-ip-address: true
   client:
     fetch-registry: true
