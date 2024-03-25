@@ -6,8 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "HOTEL-SERVICE")
+import java.util.List;
+
+@FeignClient(name= "HOTEL-SERVICE")
 public interface HotelService {
     @GetMapping("/hotels/{hotelId}")
     ResponseEntity<Hotel> getHotel(@PathVariable("hotelId") String hotelId);
+    @GetMapping("/hotels")
+    ResponseEntity<List<Hotel>> getAllHotels();
+
 }

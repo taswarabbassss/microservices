@@ -10,6 +10,7 @@ import com.lcwd.user.service.UserService.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -60,17 +61,25 @@ public class UserServiceImpl implements UserService {
 //        http://localhost:8082/hotels/f46fa7a6-51cd-4ff6-a4b5-e84a11c45334
         ratingsList.stream().map(rating -> {
 
-//        ResponseEntity<Hotel> hotelResponseEntity = restTemplate.getForEntity("http://HOTELSERVICE/hotels/"+ rating.getHotelId(), Hotel.class);
-//        Hotel hotel = hotelResponseEntity.getBody();
-            try {
+//       ResponseEntity<Hotel> hotelResponseEntity = restTemplate.getForEntity("http://localhost:8082/hotels/"+ rating.getHotelId(), Hotel.class);
+//       Hotel hotel = hotelResponseEntity.getBody();
 
-                Hotel hotel = this.hotelClientService.getHotel(rating.getHotelId()).getBody();
-                rating.setHotel(hotel);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+               Hotel hotel = hotelClientService.getHotel(rating.getHotelId()).getBody();
+              rating.setHotel(hotel);
             return rating;
         }).collect(Collectors.toList());
+//        try {
+
+//            Hotel hotel = this.hotelClientService.getHotel("0f314e16-014b-4b7e-9713-5829efcf565e").getBody();
+//            System.out.println(hotel);
+
+//            List<Hotel> allHotels = hotelClientService.getAllHotels().getBody();
+//            allHotels.forEach(hotel -> System.out.println(hotel));
+//            System.out.println(allHotels.size());
+//        } catch (Exception e) {
+//
+//            e.printStackTrace();
+//        }
 
 
         return user;
