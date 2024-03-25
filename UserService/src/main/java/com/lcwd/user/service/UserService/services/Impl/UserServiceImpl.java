@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
 
         // GET RATINGS ACCORDING TO USER ID WITH THE HELP OF RATINGS MICRO SERVICE
         //http://localhost:8083/ratings/users/2d51915e-b48d-41a8-89d0-5c2f3e1620c4
-        Rating[] ratings = restTemplate.getForObject("http://RATING-SERVICE/ratings/users/"+userId, Rating[].class);
+        Rating[] ratings = restTemplate.getForObject("http://RATINGSERVICE/ratings/users/"+userId, Rating[].class);
         List<Rating> ratingsList = Arrays.stream(ratings).toList();
         user.setRatings(ratingsList);
         logger.info("[RATINGS]", ratings);
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 //        http://localhost:8082/hotels/f46fa7a6-51cd-4ff6-a4b5-e84a11c45334
         ratingsList.stream().map( rating -> {
 
-        ResponseEntity<Hotel> hotelResponseEntity = restTemplate.getForEntity("http://HOTEL-SERVICE/hotels/"+ rating.getHotelId(), Hotel.class);
+        ResponseEntity<Hotel> hotelResponseEntity = restTemplate.getForEntity("http://HOTELSERVICE/hotels/"+ rating.getHotelId(), Hotel.class);
         Hotel hotel = hotelResponseEntity.getBody();
             rating.setHotel(hotel);
             return rating;

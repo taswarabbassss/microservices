@@ -16,7 +16,6 @@ spring:
 
 eureka:
   instance:
-    appname: HOTEL-SERVICE
     prefer-ip-address: true
   client:
     fetch-registry: true
